@@ -1,13 +1,13 @@
-package ru.andrey.kvstorage.console;
+package ru.andrey.kvstorage.console.commands;
 
 import ru.andrey.kvstorage.exception.DatabaseException;
 
-public class CreateDatabase implements DatabaseCommand {
+public class CreateDatabaseCommand implements DatabaseCommand {
 
     private final String databaseName;
     private final ExecutionEnvironment environment;
 
-    public CreateDatabase(ExecutionEnvironment environment, String databaseName) {
+    public CreateDatabaseCommand(ExecutionEnvironment environment, String databaseName) {
         this.environment = environment;
         this.databaseName = databaseName;
     }

@@ -1,4 +1,4 @@
-package ru.andrey.kvstorage.console;
+package ru.andrey.kvstorage.console.commands;
 
 import ru.andrey.kvstorage.console.DatabaseCommand;
 import ru.andrey.kvstorage.console.DatabaseCommandResult;
@@ -6,24 +6,21 @@ import ru.andrey.kvstorage.console.ExecutionEnvironment;
 import ru.andrey.kvstorage.exception.DatabaseException;
 import ru.andrey.kvstorage.logic.Database;
 
-public class UpdateKey implements DatabaseCommand {
+public class ReadKeyCommand implements DatabaseCommand {
 
-    private static final String RESULT = "Value was created.";
     private static final String ALREADY_EXISTS = "Table already exists";
     private static final String DOESNT_EXISTS = "Table doesn't exists";
 
-    private ExecutionEnvironment executionEnvironment;
-    private String databaseName;
-    private String tableName;
-    private String objectKey;
-    private String objectValue;
+    private final ExecutionEnvironment executionEnvironment;
+    private final String databaseName;
+    private final String tableName;
+    private final String objectKey;
 
-    public UpdateKey(ExecutionEnvironment executionEnvironment, String databaseName, String tableName, String objectKey, String objectValue) {
+    public ReadKeyCommand(ExecutionEnvironment executionEnvironment, String databaseName, String tableName, String objectKey) {
         this.executionEnvironment = executionEnvironment;
         this.databaseName = databaseName;
         this.tableName = tableName;
         this.objectKey = objectKey;
-        this.objectValue = objectValue;
     }
 
     @Override
@@ -33,11 +30,9 @@ public class UpdateKey implements DatabaseCommand {
         }
         Database db = executionEnvironment.getDatabase(databaseName).get();
         try {
-            db.write(tableName, objectKey, objectValue);
-            return DatabaseCommandResult.success(RESULT);
+            return DatabaseCommandResult.success(db.read(tableName, objectKey));
         } catch (DatabaseException e) {
             return DatabaseCommandResult.error(ALREADY_EXISTS);
         }
-
     }
 }
