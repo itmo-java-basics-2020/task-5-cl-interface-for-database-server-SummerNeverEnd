@@ -1,5 +1,6 @@
 package ru.andrey.kvstorage.console;
 
+import ru.andrey.kvstorage.console.commands.*;
 import ru.andrey.kvstorage.exception.DatabaseException;
 
 public enum DatabaseCommands {
