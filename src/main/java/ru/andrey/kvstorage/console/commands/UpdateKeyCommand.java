@@ -14,7 +14,7 @@ public class UpdateKeyCommand implements DatabaseCommand {
     private final String objectValue;
     private final String tableName;
     private final String databaseName;
-    private final ExecutionEnvironment environment;
+    private final ExecutionEnvironment executionEnvironment;
 
     public UpdateKeyCommand(ExecutionEnvironment environment, String databaseName, String tableName, String objectKey,
                             String objectValue) {
@@ -22,12 +22,12 @@ public class UpdateKeyCommand implements DatabaseCommand {
         this.tableName = tableName;
         this.objectKey = objectKey;
         this.objectValue = objectValue;
-        this.environment = environment;
+        this.executionEnvironment = environment;
     }
 
     @Override
     public DatabaseCommandResult execute() throws DatabaseException {
-        Optional<Database> database = environment.getDatabase(databaseName);
+        Optional<Database> database = executionEnvironment.getDatabase(databaseName);
         if (database.isPresent()) {
             database.get().write(tableName, objectKey, objectValue);
             return DatabaseCommandResult.success(String.format("Key %s was successfully updated with value = %s",
